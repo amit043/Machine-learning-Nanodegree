@@ -97,7 +97,7 @@ class Environment(object):
 
     def set_primary_agent(self, agent, enforce_deadline=False):
         """ When called, set_primary_agent sets 'agent' as the primary agent.
-            The primary agent is the smartcab that is followed in the environment. """
+            The primary agent is the smartcab1 that is followed in the environment. """
 
         self.primary_agent = agent
         agent.primary_agent = True

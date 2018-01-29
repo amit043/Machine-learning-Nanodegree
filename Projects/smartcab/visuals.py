@@ -18,7 +18,7 @@ import ast
 
 
 def calculate_safety(data):
-	""" Calculates the safety rating of the smartcab during testing. """
+	""" Calculates the safety rating of the smartcab1 during testing. """
 
 	good_ratio = data['good_actions'].sum() * 1.0 / \
 	(data['initial_deadline'] - data['final_deadline']).sum()
@@ -41,7 +41,7 @@ def calculate_safety(data):
 
 
 def calculate_reliability(data):
-	""" Calculates the reliability rating of the smartcab during testing. """
+	""" Calculates the reliability rating of the smartcab1 during testing. """
 
 	success_ratio = data['success'].sum() * 1.0 / len(data)
 

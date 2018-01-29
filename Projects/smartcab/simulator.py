@@ -12,7 +12,7 @@ import importlib
 import csv
 
 class Simulator(object):
-    """Simulates agents in a dynamic smartcab environment.
+    """Simulates agents in a dynamic smartcab1 environment.
 
     Uses PyGame to display GUI, if available.
     """

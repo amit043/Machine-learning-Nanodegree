@@ -82,7 +82,7 @@ class LearningAgent(Agent):
 
     def get_maxQ(self, state):
         """ The get_max_Q function is called when the agent is asked to find the
-            maximum Q-value of all actions based on the 'state' the smartcab is in. """
+            maximum Q-value of all actions based on the 'state' the smartcab1 is in. """
 
         ########### 
         ## TO DO ##
@@ -118,7 +118,7 @@ class LearningAgent(Agent):
 
     def choose_action(self, state):
         """ The choose_action function is called when the agent is asked to choose
-            which action to take, based on the 'state' the smartcab is in. """
+            which action to take, based on the 'state' the smartcab1 is in. """
 
         # Set the agent state and default action
         self.state = state
@@ -216,7 +216,7 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay=0.01, optimized=True)
+    sim = Simulator(env, update_delay=0.01, log_metrics=True,optimized=True)
     
     ##############
     # Run the simulator
