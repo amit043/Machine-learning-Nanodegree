@@ -48,7 +48,7 @@ class LearningAgent(Agent):
 
         if testing:
             self.epsilon, self.alpha =0, 0
-            self.Q={}
+            #self.Q={}
 
 
 
@@ -76,7 +76,8 @@ class LearningAgent(Agent):
         
         # Set 'state' as a tuple of relevant data for the agent        
         state =(waypoint, inputs['light'], inputs['left'], inputs['oncoming'])
-
+        if self.learning:
+            self.createQ(state)
         return state
 
 
@@ -105,13 +106,8 @@ class LearningAgent(Agent):
         #   Then, for each action available, set the initial Q-value to 0.0
 
         if self.learning:
-            if state:
-                if state not in self.Q:
-                    self.Q[state]={}
-                    for a in self.valid_actions:
-                        self.Q[state][a]=0.0
-
-
+            if state not in self.Q:
+                self.Q[state] = {action: 0 for action in self.valid_actions}
 
         return self.Q
 
@@ -123,7 +119,7 @@ class LearningAgent(Agent):
         # Set the agent state and default action
         self.state = state
         self.next_waypoint = self.planner.next_waypoint()
-        action = None
+        #action = None
 
         ########### 
         ## TO DO ##
@@ -141,10 +137,10 @@ class LearningAgent(Agent):
                     action = random.choice(self.valid_actions)
                 else:
                     maxQ = self.get_maxQ(state)
-                    best_action=[action for action in self.valid_actions if
-                                 self.Q[state][action] == maxQ]
+                    action=random.choice([action for action in self.valid_actions if
+                                 self.Q[state][action] == maxQ])
 
-                    action = random.choice(best_action)
+                   # action = random.choice(best_action)
         else:
             action = random.choice(self.valid_actions)
 
@@ -164,8 +160,7 @@ class LearningAgent(Agent):
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
 
         if self.learning:
-            self.Q[state][action]=(1- self.epsilon) * self.Q[state][action] + self.alpha * reward
-
+            self.Q[state][action] = (1 - self.alpha) * self.Q[state][action] + self.alpha * reward
         return
 
 
@@ -201,7 +196,7 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent, learning=True,epsilon=1.0, alpha=0.002)
+    agent = env.create_agent(LearningAgent, learning=True, alpha=0.002)
     
     ##############
     # Follow the driving agent
@@ -216,14 +211,14 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay=0.01, log_metrics=True, optimized=True)
+    sim = Simulator(env, update_delay=0.01, log_metrics=True, optimized=False)
     
     ##############
     # Run the simulator
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=100,tolerance=0.001)
+    sim.run(n_test=10,tolerance=0.001)
 
 
 if __name__ == '__main__':
