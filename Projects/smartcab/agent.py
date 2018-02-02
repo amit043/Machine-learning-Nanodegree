@@ -41,6 +41,8 @@ class LearningAgent(Agent):
         # Update additional class parameters as needed
         # If 'testing' is True, set epsilon and alpha to 0
 
+        # For default Q-learning
+        #self.epsilon = 1 - (0.05 * self.trial)
         a = 0.995
         self.epsilon = math.pow(a, self.trial)
 
