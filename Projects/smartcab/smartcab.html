@@ -11839,9 +11839,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Import the visualization code</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import the visualization code</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">visuals</span> <span class="kn">as</span> <span class="nn">vs</span>
+<span class="kn">import</span> <span class="nn">visuals</span> <span class="k">as</span> <span class="nn">vs</span>
 
 <span class="c1"># Pretty display for notebooks</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
@@ -11969,7 +11969,7 @@ Run the agent.py file after setting the flags from projects/smartcab folder inst
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Load the &#39;sim_no-learning&#39; log file from the initial simulation results</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load the &#39;sim_no-learning&#39; log file from the initial simulation results</span>
 <span class="n">vs</span><span class="o">.</span><span class="n">plot_trials</span><span class="p">(</span><span class="s1">&#39;sim_no-learning.csv&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -13264,7 +13264,7 @@ The total number of combinations is :</b>
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Load the &#39;sim_default-learning&#39; file from the default Q-Learning simulation</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load the &#39;sim_default-learning&#39; file from the default Q-Learning simulation</span>
 <span class="n">vs</span><span class="o">.</span><span class="n">plot_trials</span><span class="p">(</span><span class="s1">&#39;sim_default-learning.csv&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -14573,7 +14573,7 @@ You may also use a decaying function for $\alpha$ (the learning rate) if you so 
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Load the &#39;sim_improved-learning&#39; file from the improved Q-Learning simulation</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load the &#39;sim_improved-learning&#39; file from the improved Q-Learning simulation</span>
 <span class="n">vs</span><span class="o">.</span><span class="n">plot_trials</span><span class="p">(</span><span class="s1">&#39;sim_improved-learning.csv&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -16374,71 +16374,46 @@ Ans:-Yes  we have got A+ in safetya and A+ in reliability of the agent.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> <br>
-<b>Question 1</b><br>
-<b>Definition of optimal policy</b><br>
-If the light is red and if the waypoint is right and there is no incoming car going right, then go right. Otherwise if the light is green, go in the direction of the waypoint. If waytpoint is backward, then go left or right. If there is incoming traffic and we need to turn left, wait until no incoming car is going forward or (our) left.</p>
-<p>Not all the learned policy actions are the correct ones according to our optimal policy definition.<br>
-<b>For instance,</b> if the waypoint is going forward, the agent should advance forward if there's a green light and the left and oncoming vehicles do not interfere with its movement. An example should be</p>
-<table>
-    <tr>
-        <th>waypoint</th>
-        <th>light</th>
-        <th>left vehicle</th>
-        <th>oncoming vehicle</th>
-        <th>action</th>
-    </tr>
-    <tr>
-        <td>forward</td>
-        <td>green</td>
-        <td>right</td>
-        <td>forward</td>
-        <th>forward</th>
-    </tr>
-    <tr>
-        <td>forward</td>
-        <td>green</td>
-        <td>right</td>
-        <td>left</td>
-        <th>forward</th>
-    </tr>
-</table><p>In the first situation, the light is green and no other vehicle interferes with the movement, so the action should be go towards goal. In the second case, we want to go forward so in a green light we can always do that, no matter what the other drivers do.</p>
-<p><b>Questions 2, 3 and 4</b><br>
-Take for example this state (Please consider the variables in the tupple as (waypoint, light, left, oncoming)):</p>
-<p>('left', 'red', 'right', None)
- -- forward : -22.63
- -- None : 1.59
- -- right : 0.49
- -- left : -9.55</p>
-<p>The policy is correct, because if there is a red light and the oncoming vehicle will turn left, the car should stop, and the highest reward is given to "None" action.</p>
-<p>In another example:
- ('left', 'green', 'forward', 'left')
- -- forward : 1.13
- -- None : -4.95
- -- right : 0.27
- -- left : 2.07</p>
-<p>The policy is correct, because the light is green and the oncoming is turning left as we do, so they both can turn left at the same time with no collision.</p>
-<p>In another example:
- ('right', 'green', 'forward', 'right')
- -- forward : 0.00
- -- None : -2.10
- -- right : 1.94
- -- left : -14.63</p>
-<p>The policy is correct, because the light is green and the oncoming is going right, which does not interfere with the agent's movement, because we are turning right. So both agent and incoming can move at the same time with no collision.</p>
-<p>In another example:
-('forward', 'red', 'left', None)
- -- forward : -9.96
- -- None : 1.25
- -- right : 1.03
- -- left : -24.82</p>
-<p>We want to go forward, but the red light and the 'left' vehicle cross our way, so here the action is 'None'. Going forward, as we want, has a highly negative reward, as we will certainly cause a major accident. Going left is even worse, as its not coincident with the waypoint and causes a major accident also.</p>
-<p>In another example:
-('forward', 'green', 'right', 'right')
- -- forward : 0.00
- -- None : -2.75
- -- right : 0.50
- -- left : 0.00</p>
-<p>Here the agent didnt learned the correct policy. We want to go forward, both  'oncoming' will turn right, so wont cross our way, but the max reward is for right instead of forward. This happens probably because during the 'exploration', when this state came up, the random action choice never selected the action 'forward', and the reward is still zero. To overcome this situation, it is necessary to have more training points, perhaps with a different epsilon decay function that allows more 'exploration'.</p>
+<p><strong>Answer:</strong> <br></p>
+<p><b>optimal policy</b><br>
+ optimal policy would be the following for a red light when the intent is to drive forward with no incoming traffic. The state should look like this with the possible action of None, forward, left and right:
+ <table></p>
+<p><tr>    
+    <th>N</th>  <th>state</th>  <th>actions</th>    <th>policy</th></tr></p>
+<p><tr> <td>1</td> <td>{'forward', 'red', None, None}</td> <td>None</td>   <td>optimal</td></tr></p>
+<p><tr> <td>2</td> <td>{'forward', 'red', None, None}</td> <td>forward</td>    <td>incorrect</td></tr></p>
+<p><tr> <td>3</td> <td>{'forward', 'red', None, None}</td> <td>left</td>   <td>incorrect</td></tr></p>
+<p><tr> <td>4</td> <td>{'forward', 'red', None, None}</td> <td>right</td>  <td>suboptimal</td></tr> 
+    &lt;/table&gt;
+In looking at the sim_improved-learning.txt, I found this policy for this same state:<br>
+    <br>
+    <code>forward_red_None_None",
+    " -- forward : -3.72",
+    " -- left : -3.72",
+    " -- right : 0.19",
+    " -- None : 1.35</code>
+    <br>
+    that is the result of the re-enforcement training.  The action with the highest value of <code>1.35</code> for this policy <strong><code>None</code></strong>, matches that of the correct action in the optimal policy.  There has also learned a suboptimal policy <strong><code>right</code></strong> which has a lesser value of <code>0.19</code> than the optimal one which also matches that of the correct action for the suboptimal policy.  This makes sense, since in the US, you are allow to make right turns on red if there is no traffic.
+    <br>
+    I searched the <code>sim_improved-learning.txt</code> text file to find any suboptimal policies that the final Q-Learning agent may have learn for a state and found this:
+    <br>
+    <code>forward_red_right_right",
+    " -- forward : -0.11",
+    " -- left : 0.00",
+    " -- right : 0.00",
+    " -- None : 0.00</code>
+    <br>
+    In this state, the final optimized Q-Learning agent would not go <strong><code>forward</code></strong> on a <strong><code>red</code></strong> light which is the correct policy setting, but may chose instead to turn <strong><code>left</code></strong>, which has the same Q-value as <strong><code>right</code></strong> or <strong><code>None</code></strong> (idle).  Left on <strong><code>red</code></strong> traffic light is clearly in violation to the US traffic rules.  I would imagine that this state setting is caused by the final optimized Q-Learning agent never reaching this state in training and then chosing to make a <strong><code>left</code></strong> turn that would cause it to learn that <strong><code>left</code></strong> turn on <strong><code>red</code></strong> would result in a bad action with negative rewards.  Thus, without searching the full Q-Learning feature space and learning all the negative consequences from the environment, the final Q-Learning agent may not be as optimized as we would like and may actually fail at some tests passed 100 n_tests.<br>
+    <br>
+    Another suboptimal state from the <code>sim_improved-larning.txt</code> text file is this:<br>
+    <br>
+    <code>right_green_forward_None",
+    " -- forward : 0.17",
+    " -- left : 0.06",
+    " -- right : 0.10",
+    " -- None : -0.44</code>
+    <br>
+    In this state, the final optimized Q-Learning agent would go <strong><code>forward</code></strong> instead of turn <strong><code>right</code></strong> since that action has the highest Q-value, even though <strong><code>right</code></strong> is the waypoint to the destination in the environment.  Instead <strong><code>right</code></strong> turn only has 0.10 Q-value much lower than 0.17 Q-value for <strong><code>forward</code></strong>.  This means the final Q-Learning agent is not as efficient as it could be.  This maybe one of the reason why the final Q-Learning agent only has an A instead of A+ rating for reliability.</p>
 
 </div>
 </div>
