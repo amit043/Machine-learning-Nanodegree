@@ -3,7 +3,18 @@
 \-----------------------------------------
 
 
-waypoint, light, left traffic, oncoming traffic Action
+When waypoint is right
+If there is car coming from left, the agent should wait.
+Otherwise, go to right.
+When waypoint is forward
+If light is green, go forward
+Otherwise, wait.
+When waypoint is left
+If light is green, and oncoming traffic is moving left or no oncoming traffic, go left.
+If light is red, wait.
+Otherwise go forward
+
+waypoint, light, left traffic, oncoming traffic, Action
 
 'left', 'green', 'left', None  left
  -- forward : 0.98
